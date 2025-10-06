@@ -1,39 +1,143 @@
-# ECF – Mise en œuvre de l'application de gestion des employés
+# CDA_ECF2_React_Docker
 
 ## Contexte pédagogique
-Vous intervenez en tant qu'intégratrice ou intégrateur front-end au sein d'une équipe full stack. L'application de gestion des employés est déjà amorcée : le backend Spring Boot et une partie des outils d'industrialisation sont présents, mais plusieurs éléments critiques restent à finaliser. Cet ECF vise à évaluer votre capacité à comprendre un projet existant, à produire une interface fidèle à une maquette fournie, et à industrialiser le tout avec Docker.
+Ce projet est réalisé dans le cadre de l’**ECF – Concepteur Développeur d’Applications**.  
+Il s’agit d’une application de **gestion des employés** avec un frontend en React, un backend en Spring Boot, et une containerisation via Docker.
 
-## Ressources à disposition
-- Répertoire de code contenant les bases du frontend React et du backend Spring Boot.
-- Jeux de tests déjà présents côté frontend et backend.
-- Maquette de la gestion des employés à reproduire : `img/employees-page.png` (ainsi que `img/add-employee.png`, `img/edit-employee.png` pour les états associés et le reste du dossier `img` au besoin).
-- Fichiers `docker-compose.yml` et structures de dossiers préexistants à compléter.
+---
 
-## Objectifs pédagogiques
-- Analyser rapidement une architecture full stack existante sans documentation détaillée fournie.
-- Réaliser la partie front de gestion des employés à partir de la maquette imposée.
-- Finaliser la containerisation de l'application.
-- Maîtriser l'exécution des suites de tests front et back (Options).
+## Objectifs de l’ECF
+- Développer l’interface frontend pour la gestion des employés (liste, ajout, modification).  
+- Finaliser la containerisation complète avec Docker (frontend, backend, bases de données MySQL et MongoDB).  
+- Documenter et comprendre l’architecture de l’application.
 
-## Travail attendu
-1. **Interface frontend**
-   - Implémenter la ou les vues de gestion des employés (liste, formulaire d'ajout/édition, navigation associée) en respectant l'ergonomie et les variantes responsive visibles sur `img/employees-page.png`, `img/add-employee.png` et `img/edit-employee.png`.
-   - Respecter le design system observable dans les captures fournies (typos, espaces, palette de couleurs, composants réutilisables) et ne pas produire de dashboard générique hors périmètre.
-2. **Containerisation**
-   - Compléter le fichier `docker-compose.yml` pour orchestrer l'application complète (frontend, backend, bases de données nécessaires, reverse proxy si pertinent).
-   - Créer les `Dockerfile` manquants pour que chaque service puisse être construit et lancé via Docker.
-3. **Industrialisation et tests (Options)**
-   - Être en mesure d'exécuter les tests existants dans les sous-projets frontend et backend.
-4. **Restitution d'architecture**
-   - Rédiger un document séparé (ex. `docs/architecture.md`) qui synthétise votre compréhension de l'architecture applicative et des choix techniques. 
+---
 
-## Modalités de rendu
-- Dépôt Git accessible.
-- README mis à jour (ce fichier) servant d'énoncé officiel pour l'ECF.
+## Structure du projet
 
-## Conseils
-- Commencez par prendre en main l'existant : inventaire des scripts `package.json`, des modules Maven, et des services déjà déclarés dans `docker-compose.yml`.
-- Définissez vos composants React à partir de la maquette avant d'implémenter la logique métier.
+CDA_ECF2_React_Docker/
+├─ backend/ # Projet Spring Boot pour le backend
+│ ├─ src/
+│ ├─ pom.xml
+│ └─ Dockerfile
+├─ frontend/ # Projet React pour le frontend
+│ ├─ src/
+│ ├─ public/
+│ ├─ package.json
+│ └─ Dockerfile
+├─ docker-compose.yml # Orchestration des services
+├─ docs/
+│ └─ architecture.md # Restitution d’architecture
+├─ img/ # Captures d'écran / maquettes
+│ ├─ employees-page.png
+│ ├─ add-employee.png
+│ └─ edit-employee.png
+└─ README.md
 
 
-Bon courage !
+---
+
+## Maquettes
+
+### Page liste des employés
+![Employees Page](img/employees-page.png)
+
+### Ajouter un employé
+![Add Employee](img/add-employee.png)
+
+### Modifier un employé
+![Edit Employee](img/edit-employee.png)
+
+---
+
+## Technologies utilisées
+- **Frontend** : React, CSS  
+- **Backend** : Spring Boot, Java 17, Maven  
+- **Bases de données** : MySQL, MongoDB  
+- **Containerisation** : Docker, Docker Compose  
+
+---
+
+## Lancer le projet
+
+1. Cloner le dépôt :
+
+```bash
+git clone git@github.com:fatah0003/CDA_ECF2_React_Docker.git
+cd CDA_ECF2_React_Docker
+```
+
+
+---
+
+## Maquettes
+
+### Page liste des employés
+![Employees Page](img/employees-page.png)
+
+### Ajouter un employé
+![Add Employee](img/add-employee.png)
+
+### Modifier un employé
+![Edit Employee](img/edit-employee.png)
+
+---
+
+## Technologies utilisées
+- **Frontend** : React, CSS  
+- **Backend** : Spring Boot, Java 17, Maven  
+- **Bases de données** : MySQL, MongoDB  
+- **Containerisation** : Docker, Docker Compose  
+
+---
+
+## Lancer le projet
+
+1. Cloner le dépôt :
+
+```bash
+git clone git@github.com:fatah0003/CDA_ECF2_React_Docker.git
+cd CDA_ECF2_React_Docker
+```
+2. Construire et lancer tous les services avec Docker Compose :
+docker-compose up --build
+
+3. Accéder aux services :
+
+Frontend : http://localhost:3000
+
+Backend : http://localhost:8080
+
+Communication entre services
+
+Frontend → Backend : via http://localhost:8080/api/...
+
+Backend → MySQL : via le service mysql défini dans Docker Compose
+
+Backend → MongoDB : via le service mongodb défini dans Docker Compose
+
+Tous les services communiquent grâce au réseau interne Docker. Les ports externes permettent l’accès depuis le navigateur ou Postman.
+
+Docker et containerisation
+
+Frontend Dockerfile : construit l’app React, copie le build dans une image Nginx pour le servir.
+
+Backend Dockerfile : compile le projet Maven, crée un JAR exécutable avec Spring Boot.
+
+docker-compose.yml : définit tous les services et les lie entre eux, avec des volumes pour les bases de données et des ports exposés.
+
+Composants principaux React
+
+EmployeeList : affiche la liste des employés avec leur nom, email, âge et département.
+
+EmployeeForm : formulaire pour ajouter ou modifier un employé.
+
+App : gestion de la navigation entre les pages via react-router-dom.
+
+Flux des données
+
+Le frontend envoie des requêtes HTTP au backend pour obtenir ou modifier des employés.
+
+Le backend traite la requête, interagit avec MySQL et renvoie le résultat en JSON.
+
+Le frontend met à jour l’interface selon la réponse.
